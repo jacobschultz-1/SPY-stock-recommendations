@@ -8,8 +8,8 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from tabulate import tabulate
 
-# ============================================================
-#                ⚙️ CONFIGURATION
+
+#                CONFIGURATION
 # ============================================================
 
 TIME_WINDOW = 12
@@ -28,8 +28,8 @@ DATA_INTERVAL = "1wk"
 
 RESULTS_FOLDER = "results"
 
-# ============================================================
-#                📥 TICKER FETCHING FUNCTION
+
+#                TICKER FETCHING FUNCTION
 # ============================================================
 
 def get_sp500_tickers(limit=500):
@@ -42,8 +42,8 @@ def get_sp500_tickers(limit=500):
     tickers = [t.replace(".", "-") for t in df['Symbol'].tolist()]
     return tickers[:limit]
 
-# ============================================================
-#                💰 FUNDAMENTAL FILTER
+
+#                FUNDAMENTAL FILTER
 # ============================================================
 
 def passes_revenue_filter(ticker):
@@ -74,8 +74,8 @@ def passes_revenue_filter(ticker):
         print(f"⚠️ {ticker}: Revenue filter error - {e}")
         return False, None
 
-# ============================================================
-#                📊 TECHNICAL ANALYSIS
+
+#                TECHNICAL ANALYSIS
 # ============================================================
 
 def get_stock_data(ticker, years=DATA_PERIOD_YEARS, interval=DATA_INTERVAL):
@@ -117,8 +117,8 @@ def generate_signals(data, oversold_k=25, oversold_d=25):
     data['New_Signal'] = latest_cross
     return data
 
-# ============================================================
-#     🧮 HISTORICAL EDGE CHECK
+
+#     HISTORICAL EDGE CHECK
 # ============================================================
 
 def check_historical_edge(data, time_window):
@@ -146,8 +146,8 @@ def check_historical_edge(data, time_window):
     avg_loss, median_loss = np.mean(losses), np.median(losses)
     return avg_gain, median_gain, avg_loss, median_loss, num_signals
 
-# ============================================================
-#                📈 VOLATILITY CALCULATION
+
+#                VOLATILITY CALCULATION
 # ============================================================
 
 def calculate_annualized_volatility(data, window=20):
@@ -157,8 +157,8 @@ def calculate_annualized_volatility(data, window=20):
     data["Volatility"] = data["LogReturn"].rolling(window=window).std() * np.sqrt(T)
     return data
 
-# ============================================================
-#                🖼 PLOTTING
+
+#                PLOTTING
 # ============================================================
 
 def plot_stochastic_chart(ticker, data):
@@ -214,8 +214,8 @@ def plot_stochastic_chart(ticker, data):
     fig.update_yaxes(title_text="Volatility (Ann.)", row=3, col=1)
     fig.show()
 
-# ============================================================
-#                🧭 MAIN SCRIPT
+
+#                MAIN SCRIPT
 # ============================================================
 
 if __name__ == "__main__":
@@ -337,3 +337,4 @@ if __name__ == "__main__":
                 generate_signals(data)
                 calculate_annualized_volatility(data)
                 plot_stochastic_chart(t, data)
+
